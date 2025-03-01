@@ -57,6 +57,7 @@ let timerInterval;
 let highScore = localStorage.getItem('highScore') || 0;
 let gameOver = false;
 let winningPlayer;
+const fireworks = [];
 
 function startGame() {
   players.forEach((player) => {
@@ -66,6 +67,7 @@ function startGame() {
   gameStarted = true;
   gameOver = false;
   winningPlayer = null;
+  fireworks.length = 0; // Clear existing fireworks
   timeLeft = 10;
   timerInterval = setInterval(() => {
     timeLeft--;
@@ -113,56 +115,51 @@ function update() {
 
 function createFireworks(x, y, color = 'white') {
   const particleCount = 30;
-  const angleStep = Math.PI * 2 / particleCount;
-  const speed = 5;
-
   for (let i = 0; i < particleCount; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const velocityX = speed * Math.cos(angle);
-    const velocityY = speed * Math.sin(angle);
-
-    createParticle(x, y, velocityX, velocityY, color);
+    fireworks.push(createParticle(x, y, color));
   }
 }
 
-function createParticle(x, y, velocityX, velocityY, color) {
-  const particle = {
+function createParticle(x, y, color) {
+  const angle = Math.random() * Math.PI * 2;
+  const speed = Math.random() * 3 + 2;
+  return {
     x: x,
     y: y,
-    velocityX: velocityX,
-    velocityY: velocityY,
-    gravity: 0.1,
+    velocityX: speed * Math.cos(angle),
+    velocityY: speed * Math.sin(angle),
+    gravity: 0.05,
     alpha: 1,
     color: color,
     radius: 2,
   };
-
-  updateParticle(particle);
 }
 
-function updateParticle(particle) {
-  particle.x += particle.velocityX;
-  particle.y += particle.velocityY;
-  particle.velocityY += particle.gravity;
-  particle.alpha -= 0.02;
+function updateFireworks() {
+  for (let i = fireworks.length - 1; i >= 0; i--) {
+    const particle = fireworks[i];
+    particle.x += particle.velocityX;
+    particle.y += particle.velocityY;
+    particle.velocityY += particle.gravity;
+    particle.alpha -= 0.015;
 
-  if (particle.alpha <= 0) {
-    return;
+    if (particle.alpha <= 0) {
+      fireworks.splice(i, 1);
+    }
   }
-
-  drawParticle(particle);
-  requestAnimationFrame(() => updateParticle(particle));
 }
 
-function drawParticle(particle) {
-  ctx.save();
-  ctx.globalAlpha = particle.alpha;
-  ctx.fillStyle = particle.color;
-  ctx.beginPath();
-  ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
+function drawFireworks() {
+  fireworks.forEach(particle => {
+    ctx.save();
+    ctx.globalAlpha = particle.alpha;
+    ctx.fillStyle = particle.color;
+    ctx.beginPath();
+    ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  });
 }
 
 function draw() {
@@ -177,6 +174,8 @@ function draw() {
     drawLoadingScreen(ctx, resources.getPercentComplete());
     return;
   }
+
+  updateFireworks();
 
   const quadrantWidth = width / 2;
   const quadrantHeight = height / 2;
@@ -213,6 +212,8 @@ function draw() {
     ctx.textAlign = 'center';
     ctx.fillText(`High Score: ${highScore}`, width / 2, height - quadrantHeight * 0.1);
   }
+
+  drawFireworks();
 }
 
 function gameLoop(time) {
