@@ -9,6 +9,16 @@ const ctx = canvas.getContext('2d');
 const { width, height } = canvas;
 let lastTime;
 
+// Load the font
+const font = new FontFace('Noto Emoji', 'url(fonts/noto-emoji.ttf)');
+
+font.load().then(function(loaded_face) {
+  document.fonts.add(loaded_face);
+  // Ready to use the font!
+}).catch(function(error) {
+  console.error('Font load error:', error);
+});
+
 const resources = createResourceLoader();
 
 const players = [
@@ -159,7 +169,7 @@ function draw() {
   ctx.fillRect(0, 0, width, height);
 
   ctx.fillStyle = 'white';
-  ctx.font = `${width * 0.03}px monospace`;
+  ctx.font = `${width * 0.04}px "Noto Emoji", monospace`;
   ctx.textAlign = 'center';
 
   if (!resources.isComplete()) {
