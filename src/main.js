@@ -1,7 +1,7 @@
 // Simple jsgame starter
 // A simple starter using vite for creating a javascript game that works in web and jsgamelauncher
 
-import { createResourceLoader, drawLoadingScreen, getInput } from './utils.js';
+import { createResourceLoader, drawLoadingScreen, getInput, playSound } from './utils.js';
 
 const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
@@ -119,7 +119,7 @@ function update() {
           // Launch fireworks
           createFireworks(Math.random() * width, Math.random() * height);
           // Play sound
-          resources.playSound(resources.sounds.karateChop);
+          playSound(resources.sounds.karateChop);
         }
       } else {
         player.buttonWasPressed = false;
