@@ -23,6 +23,7 @@ Promise.all([gameFont.load(), emojiFont.load()]).then(function(loaded_faces) {
 });
 
 const resources = createResourceLoader();
+resources.addSound('karateChop', 'sounds/karate-chop.mp3');
 
 const players = [
   {
@@ -117,6 +118,8 @@ function update() {
           player.buttonWasPressed = true;
           // Launch fireworks
           createFireworks(Math.random() * width, Math.random() * height);
+          // Play sound
+          resources.playSound(resources.sounds.karateChop);
         }
       } else {
         player.buttonWasPressed = false;
