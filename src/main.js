@@ -13,25 +13,25 @@ const resources = createResourceLoader();
 
 const players = [
   {
-    name: 'Player 1',
+    name: '😀',
     button: 'BUTTON_NORTH', // Y on Xbox, X on Nintendo, S on keyboard
     tapCount: 0,
     buttonWasPressed: false,
   },
   {
-    name: 'Player 2',
+    name: '😂',
     button: 'BUTTON_EAST', // B on Xbox, A on Nintendo, X on keyboard
     tapCount: 0,
     buttonWasPressed: false,
   },
   {
-    name: 'Player 3',
+    name: '😎',
     button: 'BUTTON_SOUTH', // A on Xbox, B on Nintendo, Z on keyboard
     tapCount: 0,
     buttonWasPressed: false,
   },
   {
-    name: 'Player 4',
+    name: '😍',
     button: 'BUTTON_WEST', // X on Xbox, Y on Nintendo, A on keyboard
     tapCount: 0,
     buttonWasPressed: false,
