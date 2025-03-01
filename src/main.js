@@ -106,6 +106,7 @@ function draw() {
 
   if (!gameStarted) {
     ctx.fillText('Tap Z to Start', width / 2, height / 2);
+    ctx.fillText(`High Score: ${highScore}`, width / 2, height - quadrantHeight * 0.1);
   } else {
     // Time Left
     ctx.fillText(`Time Left: ${timeLeft}`, width / 2, quadrantHeight * 0.2);
