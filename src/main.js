@@ -15,11 +15,13 @@ let tapCount = 0;
 let gameStarted = false;
 let timeLeft = 10;
 let timerInterval;
+let buttonWasPressed = false;
 
 function startGame() {
   tapCount = 0;
   gameStarted = true;
   timeLeft = 10;
+  buttonWasPressed = false;
   timerInterval = setInterval(() => {
     timeLeft--;
     if (timeLeft <= 0) {
@@ -33,7 +35,12 @@ function update() {
   const [p1] = getInput();
   if (gameStarted) {
     if (p1.BUTTON_EAST.pressed) {
-      tapCount++;
+      if (!buttonWasPressed) {
+        tapCount++;
+        buttonWasPressed = true;
+      }
+    } else {
+      buttonWasPressed = false;
     }
   } else {
     if (p1.BUTTON_SOUTH.pressed) {
