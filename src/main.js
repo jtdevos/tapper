@@ -42,6 +42,8 @@ let gameStarted = false;
 let timeLeft = 10;
 let timerInterval;
 let highScore = localStorage.getItem('highScore') || 0;
+let gameOver = false;
+let winningPlayer;
 
 function startGame() {
   players.forEach((player) => {
@@ -49,17 +51,23 @@ function startGame() {
     player.buttonWasPressed = false;
   });
   gameStarted = true;
+  gameOver = false;
+  winningPlayer = null;
   timeLeft = 10;
   timerInterval = setInterval(() => {
     timeLeft--;
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       gameStarted = false;
+      gameOver = true;
       const totalTaps = players.reduce((sum, player) => sum + player.tapCount, 0);
       if (totalTaps > highScore) {
         highScore = totalTaps;
         localStorage.setItem('highScore', highScore);
       }
+
+      // Determine the winner
+      winningPlayer = players.reduce((prev, current) => (prev.tapCount > current.tapCount) ? prev : current);
     }
   }, 1000);
 }
@@ -104,7 +112,12 @@ function draw() {
   const quadrantWidth = width / 2;
   const quadrantHeight = height / 2;
 
-  if (!gameStarted) {
+  if (gameOver) {
+    ctx.fillText('Game Over!', width / 2, height / 2 - quadrantHeight * 0.2);
+    ctx.fillText(`${winningPlayer.name} won with ${winningPlayer.tapCount} taps!`, width / 2, height / 2);
+    ctx.fillText('Tap Z to Start', width / 2, height / 2 + quadrantHeight * 0.2);
+  }
+  else if (!gameStarted) {
     ctx.fillText('Tap Z to Start', width / 2, height / 2);
     ctx.fillText(`High Score: ${highScore}`, width / 2, height - quadrantHeight * 0.1);
   } else {
