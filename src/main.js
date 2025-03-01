@@ -113,19 +113,19 @@ function draw() {
 
     // Player 1 (Top Left)
     ctx.textAlign = 'left';
-    ctx.fillText(`${players[0].name}: ${players[0].tapCount}`, quadrantWidth * 0.1, quadrantHeight * 0.4);
+    ctx.fillText(`${players[0].name}: ${players[0].tapCount}`, quadrantWidth * 0.1, quadrantHeight * 0.3);
 
     // Player 2 (Top Right)
     ctx.textAlign = 'right';
-    ctx.fillText(`${players[1].name}: ${players[1].tapCount}`, width - quadrantWidth * 0.1, quadrantHeight * 0.4);
+    ctx.fillText(`${players[1].name}: ${players[1].tapCount}`, width - quadrantWidth * 0.1, quadrantHeight * 0.3);
 
     // Player 3 (Bottom Left)
     ctx.textAlign = 'left';
-    ctx.fillText(`${players[2].name}: ${players[2].tapCount}`, quadrantWidth * 0.1, height - quadrantHeight * 0.4);
+    ctx.fillText(`${players[2].name}: ${players[2].tapCount}`, quadrantWidth * 0.1, height - quadrantHeight * 0.3);
 
     // Player 4 (Bottom Right)
     ctx.textAlign = 'right';
-    ctx.fillText(`${players[3].name}: ${players[3].tapCount}`, width - quadrantWidth * 0.1, height - quadrantHeight * 0.4);
+    ctx.fillText(`${players[3].name}: ${players[3].tapCount}`, width - quadrantWidth * 0.1, height - quadrantHeight * 0.3);
 
     // High Score (Center Bottom)
     ctx.textAlign = 'center';
