@@ -12,6 +12,7 @@ let lastTime;
 const resources = createResourceLoader();
 
 let tapCount = 0;
+let highScore = localStorage.getItem('highScore') || 0;
 let gameStarted = false;
 let timeLeft = 10;
 let timerInterval;
@@ -27,6 +28,10 @@ function startGame() {
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       gameStarted = false;
+      if (tapCount > highScore) {
+        highScore = tapCount;
+        localStorage.setItem('highScore', highScore);
+      }
     }
   }, 1000);
 }
@@ -65,8 +70,9 @@ function draw() {
     ctx.fillText('Tap Z to Start', width / 2, height / 2 - width * 0.05);
     ctx.fillText('Tap X to count', width / 2, height / 2 + width * 0.05);
   } else {
-    ctx.fillText(`Time Left: ${timeLeft}`, width / 2, height / 2 - width * 0.05);
-    ctx.fillText(`Taps: ${tapCount}`, width / 2, height / 2 + width * 0.05);
+    ctx.fillText(`Time Left: ${timeLeft}`, width / 2, height / 2 - width * 0.1);
+    ctx.fillText(`Taps: ${tapCount}`, width / 2, height / 2);
+    ctx.fillText(`High Score: ${highScore}`, width / 2, height / 2 + width * 0.1);
   }
 }
 
