@@ -130,7 +130,7 @@ function update() {
 
 function createFireworks(x, y) {
   const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-  const particleCount = 50;
+  const particleCount = 30; // Reduced particle count
   for (let i = 0; i < particleCount; i++) {
     fireworks.push(createParticle(x, y, color));
   }
@@ -147,8 +147,8 @@ function createParticle(x, y, color) {
     gravity: 0.05,
     alpha: 1,
     color: color,
-    radius: 2,
-    lifespan: Math.random() * 50 + 50,
+    size: 3, // Size of the square particle
+    lifespan: Math.random() * 30 + 30, // Reduced lifespan
   };
 }
 
@@ -171,10 +171,7 @@ function drawFireworks() {
     ctx.save();
     ctx.globalAlpha = particle.alpha;
     ctx.fillStyle = particle.color;
-    ctx.beginPath();
-    ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.fill();
+    ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
     ctx.restore();
   });
 }
