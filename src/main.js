@@ -16,28 +16,24 @@ const players = [
     name: 'Player 1',
     button: 'BUTTON_NORTH', // Y on Xbox, X on Nintendo, S on keyboard
     tapCount: 0,
-    highScore: localStorage.getItem('highScore1') || 0,
     buttonWasPressed: false,
   },
   {
     name: 'Player 2',
     button: 'BUTTON_EAST', // B on Xbox, A on Nintendo, X on keyboard
     tapCount: 0,
-    highScore: localStorage.getItem('highScore2') || 0,
     buttonWasPressed: false,
   },
   {
     name: 'Player 3',
     button: 'BUTTON_SOUTH', // A on Xbox, B on Nintendo, Z on keyboard
     tapCount: 0,
-    highScore: localStorage.getItem('highScore3') || 0,
     buttonWasPressed: false,
   },
   {
     name: 'Player 4',
     button: 'BUTTON_WEST', // X on Xbox, Y on Nintendo, A on keyboard
     tapCount: 0,
-    highScore: localStorage.getItem('highScore4') || 0,
     buttonWasPressed: false,
   },
 ];
@@ -45,6 +41,7 @@ const players = [
 let gameStarted = false;
 let timeLeft = 10;
 let timerInterval;
+let highScore = localStorage.getItem('highScore') || 0;
 
 function startGame() {
   players.forEach((player) => {
@@ -58,12 +55,11 @@ function startGame() {
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       gameStarted = false;
-      players.forEach((player, index) => {
-        if (player.tapCount > player.highScore) {
-          player.highScore = player.tapCount;
-          localStorage.setItem(`highScore${index + 1}`, player.highScore);
-        }
-      });
+      const totalTaps = players.reduce((sum, player) => sum + player.tapCount, 0);
+      if (totalTaps > highScore) {
+        highScore = totalTaps;
+        localStorage.setItem('highScore', highScore);
+      }
     }
   }, 1000);
 }
@@ -113,10 +109,15 @@ function draw() {
     ctx.fillText(`Time Left: ${timeLeft}`, width / 2, yOffset);
     yOffset += lineHeight * 1.5;
 
+    let totalTaps = 0;
     players.forEach((player) => {
-      ctx.fillText(`${player.name}: Taps ${player.tapCount} High Score ${player.highScore}`, width / 2, yOffset);
+      ctx.fillText(`${player.name}: Taps ${player.tapCount}`, width / 2, yOffset);
+      totalTaps += player.tapCount;
       yOffset += lineHeight;
     });
+    ctx.fillText(`Total Taps: ${totalTaps}`, width / 2, yOffset);
+    yOffset += lineHeight * 1.5;
+    ctx.fillText(`High Score: ${highScore}`, width / 2, yOffset);
   }
 }
 
