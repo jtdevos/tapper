@@ -58,8 +58,11 @@ let highScore = localStorage.getItem('highScore') || 0;
 let gameOver = false;
 let winningPlayer;
 const fireworks = [];
+let canStartNewGame = true;
 
 function startGame() {
+  if (!canStartNewGame) return;
+
   players.forEach((player) => {
     player.tapCount = 0;
     player.buttonWasPressed = false;
@@ -75,6 +78,11 @@ function startGame() {
       clearInterval(timerInterval);
       gameStarted = false;
       gameOver = true;
+      canStartNewGame = false;
+      setTimeout(() => {
+        canStartNewGame = true;
+      }, 3000);
+
       const totalTaps = players.reduce((sum, player) => sum + player.tapCount, 0);
       if (totalTaps > highScore) {
         highScore = totalTaps;
@@ -90,7 +98,7 @@ function startGame() {
 function update() {
   const allInputs = getInput();
 
-  if (!gameStarted) {
+  if (!gameStarted && canStartNewGame) {
     if (allInputs.some(input => input.BUTTON_SOUTH.pressed)) {
       startGame();
     }
@@ -183,7 +191,11 @@ function draw() {
   if (gameOver) {
     ctx.fillText('Game Over!', width / 2, height / 2 - quadrantHeight * 0.2);
     ctx.fillText(`${winningPlayer.name} won with ${winningPlayer.tapCount} taps!`, width / 2, height / 2);
-    ctx.fillText('Tap Z to Start', width / 2, height / 2 + quadrantHeight * 0.2);
+    if (canStartNewGame) {
+      ctx.fillText('Tap Z to Start', width / 2, height / 2 + quadrantHeight * 0.2);
+    } else {
+      ctx.fillText('New game starting soon...', width / 2, height / 2 + quadrantHeight * 0.2);
+    }
   }
   else if (!gameStarted) {
     ctx.fillText('Tap Z to Start', width / 2, height / 2);
