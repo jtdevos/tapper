@@ -2,6 +2,7 @@
 // A simple starter using vite for creating a javascript game that works in web and jsgamelauncher
 
 import { createResourceLoader, drawLoadingScreen, getInput } from './utils.js';
+import { createFireworks } from './fireworks.js';
 
 const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
@@ -88,6 +89,10 @@ function update() {
         if (!player.buttonWasPressed) {
           player.tapCount++;
           player.buttonWasPressed = true;
+          // Launch fireworks
+          const x = Math.random() * width;
+          const y = Math.random() * height;
+          createFireworks(x, y, ctx, 'white');
         }
       } else {
         player.buttonWasPressed = false;
