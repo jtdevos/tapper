@@ -172,7 +172,7 @@ function draw() {
   ctx.fillRect(0, 0, width, height);
 
   ctx.fillStyle = 'white';
-  ctx.font = `${width * 0.04}px GameFont, "Noto Emoji", monospace`;
+  ctx.font = `${width * 0.06}px GameFont, "Noto Emoji", monospace`;
   ctx.textAlign = 'center';
 
   if (!resources.isComplete()) {

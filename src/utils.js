@@ -99,7 +99,7 @@ export function createResourceLoader() {
 export function drawLoadingScreen(ctx, percentComplete, backgroundColor = 'black', foregroundColor = 'white') {
   const width = ctx.canvas.width;
   const height = ctx.canvas.height;
-  const fontSize = height * 0.1;
+  const fontSize = height * 0.15;
   ctx.fillStyle = backgroundColor;
   ctx.fillRect(0, 0, width, height);
   ctx.fillStyle = foregroundColor;
