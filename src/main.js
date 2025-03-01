@@ -98,6 +98,10 @@ function startGame() {
 function update() {
   const allInputs = getInput();
 
+  if (gameOver && !canStartNewGame) {
+    return; // Ignore input during the wait period
+  }
+
   if (!gameStarted && canStartNewGame) {
     if (allInputs.some(input => input.BUTTON_SOUTH.pressed)) {
       startGame();
