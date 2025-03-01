@@ -125,8 +125,9 @@ function update() {
   });
 }
 
-function createFireworks(x, y, color = 'white') {
-  const particleCount = 30;
+function createFireworks(x, y) {
+  const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+  const particleCount = 50;
   for (let i = 0; i < particleCount; i++) {
     fireworks.push(createParticle(x, y, color));
   }
@@ -144,6 +145,7 @@ function createParticle(x, y, color) {
     alpha: 1,
     color: color,
     radius: 2,
+    lifespan: Math.random() * 50 + 50,
   };
 }
 
@@ -153,9 +155,9 @@ function updateFireworks() {
     particle.x += particle.velocityX;
     particle.y += particle.velocityY;
     particle.velocityY += particle.gravity;
-    particle.alpha -= 0.015;
+    particle.alpha -= 0.01;
 
-    if (particle.alpha <= 0) {
+    if (particle.alpha <= 0 || particle.lifespan <= 0) {
       fireworks.splice(i, 1);
     }
   }
