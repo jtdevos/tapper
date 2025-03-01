@@ -133,6 +133,7 @@ window.addEventListener('keyup', (e) => {
   keys[e.key] = keys[e.key] || getDefaultBtn();
   keys[e.key].pressed = false;
   keys[e.key].value = 0;
+  console.log(e)
 });
 
 // normalizes input from a gamepad or keyboard
@@ -187,7 +188,7 @@ export function getInput() {
     LEFT_TRIGGER: keys['e'] || getDefaultBtn(),
     RIGHT_TRIGGER: keys['r'] || getDefaultBtn(),
     SELECT: keys['Shift'] || getDefaultBtn(),
-    START: keys['Enter'] || getDefaultBtn(),
+    START: keys['return'] || getDefaultBtn(),
     GUIDE: keys['Escape'] || getDefaultBtn(),
     LEFT_STICK: keys['c'] || getDefaultBtn(),
     RIGHT_STICK: keys['v'] || getDefaultBtn(),
