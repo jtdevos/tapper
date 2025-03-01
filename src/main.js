@@ -101,23 +101,34 @@ function draw() {
     return;
   }
 
+  const quadrantWidth = width / 2;
+  const quadrantHeight = height / 2;
+
   if (!gameStarted) {
     ctx.fillText('Tap Z to Start', width / 2, height / 2);
   } else {
-    const lineHeight = width * 0.04;
-    let yOffset = height * 0.1;
-    ctx.fillText(`Time Left: ${timeLeft}`, width / 2, yOffset);
-    yOffset += lineHeight * 1.5;
+    // Time Left
+    ctx.fillText(`Time Left: ${timeLeft}`, width / 2, quadrantHeight * 0.2);
 
-    let totalTaps = 0;
-    players.forEach((player) => {
-      ctx.fillText(`${player.name}: Taps ${player.tapCount}`, width / 2, yOffset);
-      totalTaps += player.tapCount;
-      yOffset += lineHeight;
-    });
-    ctx.fillText(`Total Taps: ${totalTaps}`, width / 2, yOffset);
-    yOffset += lineHeight * 1.5;
-    ctx.fillText(`High Score: ${highScore}`, width / 2, yOffset);
+    // Player 1 (Top Left)
+    ctx.textAlign = 'left';
+    ctx.fillText(`${players[0].name}: ${players[0].tapCount}`, quadrantWidth * 0.1, quadrantHeight * 0.4);
+
+    // Player 2 (Top Right)
+    ctx.textAlign = 'right';
+    ctx.fillText(`${players[1].name}: ${players[1].tapCount}`, width - quadrantWidth * 0.1, quadrantHeight * 0.4);
+
+    // Player 3 (Bottom Left)
+    ctx.textAlign = 'left';
+    ctx.fillText(`${players[2].name}: ${players[2].tapCount}`, quadrantWidth * 0.1, height - quadrantHeight * 0.4);
+
+    // Player 4 (Bottom Right)
+    ctx.textAlign = 'right';
+    ctx.fillText(`${players[3].name}: ${players[3].tapCount}`, width - quadrantWidth * 0.1, height - quadrantHeight * 0.4);
+
+    // High Score (Center Bottom)
+    ctx.textAlign = 'center';
+    ctx.fillText(`High Score: ${highScore}`, width / 2, height - quadrantHeight * 0.1);
   }
 }
 
