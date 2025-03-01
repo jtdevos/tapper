@@ -103,7 +103,7 @@ function update() {
   }
 
   if (!gameStarted && canStartNewGame) {
-    if (allInputs.some(input => input.BUTTON_SOUTH.pressed)) {
+    if (allInputs.some(input => input.START.pressed)) {
       startGame();
     }
     return;
@@ -198,13 +198,13 @@ function draw() {
     ctx.fillText('Game Over!', width / 2, height / 2 - quadrantHeight * 0.2);
     ctx.fillText(`${winningPlayer.name} won with ${winningPlayer.tapCount} taps!`, width / 2, height / 2);
     if (canStartNewGame) {
-      ctx.fillText('Tap Z to Start', width / 2, height / 2 + quadrantHeight * 0.2);
+      ctx.fillText('Press Start to Begin!', width / 2, height / 2 + quadrantHeight * 0.2);
     } else {
       ctx.fillText('New game starting soon...', width / 2, height / 2 + quadrantHeight * 0.2);
     }
   }
   else if (!gameStarted) {
-    ctx.fillText('Tap Z to Start', width / 2, height / 2);
+    ctx.fillText('Press Start to Begin!', width / 2, height / 2);
     ctx.fillText(`High Score: ${highScore}`, width / 2, height - quadrantHeight * 0.1);
   } else {
     // Time Left
